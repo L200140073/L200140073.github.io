@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <title>L200140073 - Tugas Sistem Informasi Geografi 2017</title>
+  <link href="favicon.png" rel="shortcut icon" /> 
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Memanggil pustaka Google Map -->
+	<SCRIPT src="https://maps.googleapis.com/maps/api/js?key= AIzaSyAxlo4YJ0P3NNfi3fXwILI15hFwtQZD-tU&libraries=drawing&sensor=false""></SCRIPT>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <style type="text/css">
+	body{
+		margin-top:0 px;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+		background: whitesmoke;
+	}
+		.well{
+			text-align: center;
+			font-size: 25px;
+		}
+		.glyphicon { margin-right:10px; }
+		.panel-body { padding:0px; }
+		.panel-body table tr td { padding-left: 15px }
+		.panel-body .table {margin-bottom: 0px; }
+		
+		a:link {text-decoration: none}
+		a:visited {text-decoration: none}
+		a:active {text-decoration: none}
+		
+		h1{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";}
+		
+		#pages {
+			padding:8px 16px;
+			border:1px solid #ccc;
+			color:#408c99;
+			font-weight:bold;
+		}
+	  
+		body.linked .button, body.linked h1 {
+			opacity: .3;
+		}
+		
+		body.linked p {
+			color: rgba(22, 22, 22, 0.3);
+		}
+
+	.button {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		overflow: hidden;
+		margin: 10px;
+		padding: 15px;
+		cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			-webkit-transition: all 60ms ease-in-out;
+		transition: all 60ms ease-in-out;
+		text-align: center;
+		white-space: nowrap;
+		text-decoration: none !important;
+		text-transform: none;
+		text-transform: capitalize;
+		color: #fff;
+		border: 0 none;
+		border-radius: 6px;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 1.3;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+		appearance: none;
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+		justify-content: center;
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+		align-items: center;
+			-webkit-box-flex: 0;
+			-ms-flex: 0 0 160px;
+        flex: 0 0 160px;
+	}
+	.button:hover {
+		-webkit-transition: all 60ms ease;
+		transition: all 60ms ease;
+		opacity: .85;
+	}
+	
+	.button:active {
+		-webkit-transition: all 60ms ease;
+		transition: all 60ms ease;
+		opacity: .75;
+	}
+	.button:focus {
+		outline: 1px dotted #959595;
+		outline-offset: -4px;
+	}
+
+	.button.-regular {
+		color: #202129;
+		background-color: #edeeee;
+	}
+	.button.-regular:hover {
+		color: #202129;
+		background-color: #e1e2e2;
+		opacity: 1;
+	}
+
+	.button.-regular:active {
+		background-color: #d5d6d6;
+		opacity: 1;
+	}
+
+	.button.-blue {
+		color: #FFFFFF;
+		background: #2c3e50;
+		width: 50%;
+	}
+	
+	.topnav {
+		overflow: hidden;
+		background-color: #2c3e50;
+		font-family: Roboto;
+	}
+
+	.topnav a {
+		float: right;
+		display: block;
+		color: #f2f2f2;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		font-size: 17px;  
+	}
+
+	.topnav a:hover {
+		background-color: whitesmoke;
+		color: black;
+	}
+
+	.topnav a.active {
+		background-color: #ecf0f1;
+		color: #2c3e50;
+	}
+ </style>
+
+ </head>
+
+<body>
+	<div class="topnav">
+		<a href="https://www.facebook.com/dicky.alfian.7" target="_blank">Contact Personal</a>
+		<a href="https://github.com/L200140073" target="_blank">Github Profile</a>
+		<a href="index.html">Home</a>
+	</div>
+	
+	<div class="row">
+		<div class="container">
+    	<div class="col-md-14">
+		<br>
+		<a href='index.html'>
+		<p style="text-align:center"><img src="logo.png" height="35%" width="35%"><br>
+		</a>
+		
+		</div>
+		</div><br>
+		</div>
+	</div>
+	
+	</div>
+	
+	<div class="row">
+		<div class="container">
+			<div class="col-md-3">
+				<div class="panel-group" align="center">
+							
+							<a href="https://github.com/L200140073/sistem-informasi-geografi-2017/blob/master/tugas1_l200140073.docx" target="_blank" class='button -blue center'>
+								<h4 class="panel-title">
+	                            	Tugas 1 
+	                        	</h4>
+							</a>
+							
+							<a href="tugas2.html" class='button -blue center'>
+								<h4 class="panel-title">
+	                            	Tugas 2 
+	                        	</h4>
+							</a>
+							
+							<a href="tugas3.html" class='button -blue center'>
+								<h4 class="panel-title">
+	                            	Tugas 3 
+	                        	</h4>
+							</a>
+							
+							<a href="tugas4.html" class='button -blue center'>
+								<h4 class="panel-title">
+	                            	Tugas 4 
+	                        	</h4>
+							</a>
+							
+							<a href="tugas5.html" class='button -blue center'>
+								<h4 class="panel-title">
+	                            	Tugas 5 
+	                        	</h4>
+							</a>
+				</div>				
+			</div>
+			
+		<div class="col-md-9">
+    		<div class="panel-body page-contents">
+    		<div id="tugas1" class="content-p collapse in">
+    		<div class="well">
+				Diky Alfian Kurniawan (L200140073)<br>
+				Kelas : A
+				<br><br>
+				<b>Tugas Akhir Sistem Informasi Geografis</b>
+				<br>
+				<ol align="left" style="list-style-type:square">
+					<li>Tugas 1 : Tipe-tipe data, Membuat function dalam JavaScript</li>
+					<li>Tugas 2 : Menampilkan peta, Auto location, 4 menu tipe peta</li>
+					<li>Tugas 3 : Membuat peta UMS, Polygon setiap fakultas</li>
+					<li>Tugas 4 : Membuat google street view area UMS</li>
+					<li>Tugas 5 : Alamat, Kordinat, Ketinggian, Jarak, Rute, Street view </li>
+				</ol>
+    		</div>
+			</div>
+			</div>				
+		</div>	
+	</div>		
+</body>
+</html>

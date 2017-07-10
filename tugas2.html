@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <title>L200140073 - Tugas Sistem Informasi Geografi 2017</title>
+  <link href="favicon.png" rel="shortcut icon" /> 
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Memanggil pustaka Google Map -->
+	<script src="https://maps.googleapis.com/maps/api/js?key= AIzaSyAxlo4YJ0P3NNfi3fXwILI15hFwtQZD-tU&libraries=drawing&sensor=false"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	<!-- Memanggil pustaka Google Map -->
+	<script type="Text/Javascript" src="geolocation.js"></script>
+
+  <style type="text/css">
+	body{
+		margin-top:0 px;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+		background: whitesmoke;
+	}
+	
+		#mapDiv { 
+			width: 785px; 
+			height: 350px;
+		}
+	
+		.well{
+			text-align: center;
+			font-size: 25px;
+		}
+		.glyphicon { margin-right:10px; }
+		.panel-body { padding:0px; }
+		.panel-body table tr td { padding-left: 15px }
+		.panel-body .table {margin-bottom: 0px; }
+		
+		a:link {text-decoration: none}
+		a:visited {text-decoration: none}
+		a:active {text-decoration: none}
+		
+		h1{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";}
+		
+		#pages {
+			padding:8px 16px;
+			border:1px solid #ccc;
+			color:#408c99;
+			font-weight:bold;
+		}
+	  
+		body.linked .button, body.linked h1 {
+			opacity: .3;
+		}
+		
+		body.linked p {
+			color: rgba(22, 22, 22, 0.3);
+		}
+
+	.button {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		overflow: hidden;
+		margin: 10px;
+		padding: 15px;
+		cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			-webkit-transition: all 60ms ease-in-out;
+		transition: all 60ms ease-in-out;
+		text-align: center;
+		white-space: nowrap;
+		text-decoration: none !important;
+		text-transform: none;
+		text-transform: capitalize;
+		color: #fff;
+		border: 0 none;
+		border-radius: 6px;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 1.3;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+		appearance: none;
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+		justify-content: center;
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+		align-items: center;
+			-webkit-box-flex: 0;
+			-ms-flex: 0 0 160px;
+        flex: 0 0 160px;
+	}
+	.button:hover {
+		-webkit-transition: all 60ms ease;
+		transition: all 60ms ease;
+		opacity: .85;
+	}
+	
+	.button:active {
+		-webkit-transition: all 60ms ease;
+		transition: all 60ms ease;
+		opacity: .75;
+	}
+	.button:focus {
+		outline: 1px dotted #959595;
+		outline-offset: -4px;
+	}
+
+	.button.-regular {
+		color: #202129;
+		background-color: #edeeee;
+	}
+	.button.-regular:hover {
+		color: #202129;
+		background-color: #e1e2e2;
+		opacity: 1;
+	}
+
+	.button.-regular:active {
+		background-color: #d5d6d6;
+		opacity: 1;
+	}
+
+	.button.-blue {
+		color: #FFFFFF;
+		background: #2c3e50;
+		width: 50%;
+	}
+	
+	.topnav {
+		overflow: hidden;
+		background-color: #2c3e50;
+		font-family: Roboto;
+	}
+
+	.topnav a {
+		float: right;
+		display: block;
+		color: #f2f2f2;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		font-size: 17px;  
+	}
+
+	.topnav a:hover {
+		background-color: whitesmoke;
+		color: black;
+	}
+
+	.topnav a.active {
+		background-color: #ecf0f1;
+		color: #2c3e50;
+	}
+	
+	.buttonMap {
+		background-color: #2980b9; /* Green */
+		border: none;
+		color: white;
+		padding: 16px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		-webkit-transition-duration: 0.4s; /* Safari */
+		transition-duration: 0.4s;
+		cursor: pointer;
+	}
+	
+	.button2 {
+		background-color: white; 
+		color: black; 
+		border: 2px solid #2980b9;
+		padding: 10px 28px;
+		border-radius: 4px;
+	}
+
+	.button2:hover {
+		background-color: #2980b9;
+		color: white;
+	}
+	
+ </style>
+
+	<!-- membuat script untuk menampilkan peta -->
+	<SCRIPT>
+		//variabel GLOBAL
+		var  map; //langsung di eksekusi oleh browser  
+		function initMap() {
+			//dieksekusi jika nama fungsi di panggil
+			// mengatur opsi map 
+			var mapOptions = {
+			//lokasi awal yang akan di tampilkan di tengah layar
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+		// variabel utk mengontrol elemen div
+		var mapElement = document.getElementById('mapDiv');
+		// proses membuat peta dan meletakannya pada elemen div
+		map = new google.maps.Map(mapElement, mapOptions); 
+		}
+		// menampilkan peta, pada saat dokumen html di // LOAD dalam screen browser
+		// panggil fungsi initMap() pada saat dokumen di load dalam screen
+		google.maps.event.addDomListener(window, 'load', initMap); 
+	</SCRIPT>
+	
+	<script>
+		if (navigator.geolocation) {
+		//minta ijin kepada user, jika diijinkan 
+		//navigator.geolocation = True
+		
+		//membaca posisi/lokasi client (browser) saat ini
+		navigator.geolocation.getCurrentPosition(
+			// position adalah data lokasi hasil pembacaan 
+			// berupa lokasi dalam json
+			function(position) {
+				console.log(position);   //menulis di konsole
+				var lat = position.coords.latitude
+				var lng = position.coords.longitude;
+	 
+			// devCenter adalah data lokasi dengan format 
+			// google.maps
+			var devCenter =  new google.maps.LatLng(lat, lng);
+			// mengatur lokasi PUSAT peta (map) 
+			map.setCenter(devCenter);
+			//mengatur Level ZOOM (18)
+			map.setZoom(18);
+
+			console.log(latitude + " -- " + longitude);
+			});
+		}
+	</script>
+ 
+ </head>
+
+<body>
+	<div class="topnav">
+		<a href="https://www.facebook.com/dicky.alfian.7" target="_blank">Contact Personal</a>
+		<a href="https://github.com/L200140073" target="_blank">Github Profile</a>
+		<a href="index.html">Home</a>
+	</div>
+	
+	<div class="row">
+		<div class="container">
+    	<div class="col-md-14">
+		<br>
+		<a href='index.html'>
+		<p style="text-align:center"><img src="logo.png" height="35%" width="35%"><br>
+		</a>
+		
+		</div>
+		</div><br>
+		</div>
+	</div>
+	
+	</div>
+	
+	<div class="row">
+		<div class="container">
+			<div class="col-md-3">
+				<div class="panel-group" align="center">
+							
+							<a href="https://github.com/L200140073/sistem-informasi-geografi-2017/blob/master/tugas1_l200140073.docx" target="_blank" class='button -blue center'>
+								<h4 class="panel-title">
+	                            	Tugas 1 
+	                        	</h4>
+							</a>
+							
+							<a href="tugas2.html" class='button -blue center'>
+								<h4 class="panel-title">
+	                            	Tugas 2 
+	                        	</h4>
+							</a>
+							
+							<a href="tugas3.html" class='button -blue center'>
+								<h4 class="panel-title">
+	                            	Tugas 3 
+	                        	</h4>
+							</a>
+							
+							<a href="tugas4.html" class='button -blue center'>
+								<h4 class="panel-title">
+	                            	Tugas 4 
+	                        	</h4>
+							</a>
+							
+							<a href="tugas5.html" class='button -blue center'>
+								<h4 class="panel-title">
+	                            	Tugas 5 
+	                        	</h4>
+							</a>
+				</div>				
+			</div>
+			
+		<div class="col-md-9">
+    		<div class="panel-body page-contents">
+    		<div id="tugas2" class="content-p collapse in">
+    		<div class="well">
+			<h2><label>Geolocation</label></h2></center>
+				<input id="btnRoad" type="button" class='buttonMap button2' value="RoadMap">
+				<input id="btnSat" type="button" class='buttonMap button2' value="Satellite">
+				<input id="btnHyb" type="button" class='buttonMap button2' value="Hybrid">
+				<input id="btnTer" type="button" class='buttonMap button2' value="Terrain"><br><br>
+			<script>
+				document.getElementById('btnRoad').addEventListener('click', function(){
+					map.setMapTypeId(google.maps.MapTypeId.ROADMAP); 
+				});
+				document.getElementById('btnSat').addEventListener('click', function(){
+                    map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+				});
+				document.getElementById('btnHyb').addEventListener('click', function(){
+					map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+				});
+				document.getElementById('btnTer').addEventListener('click', function(){
+                    map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+				});
+			</script>
+		<!-- lokasi untuk menampilkan peta -->
+		<div id="mapDiv"></div>
+    		</div>
+			</div>
+			</div>
+	</div>		
+</body>
+</html>
