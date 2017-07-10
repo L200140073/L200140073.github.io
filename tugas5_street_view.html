@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <title>L200140073
+   - Tugas Sistem Informasi Geografi 2017</title>
+  <link href="favicon.png" rel="shortcut icon" /> 
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Memanggil pustaka Google Map -->
+	<script src="https://maps.googleapis.com/maps/api/js?key= AIzaSyAxlo4YJ0P3NNfi3fXwILI15hFwtQZD-tU&libraries=drawing&sensor=false"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	<!-- Memanggil pustaka Google Map -->
+	<script type="Text/Javascript" src="geolocation.js"></script>
+
+  <style type="text/css">
+	body{
+		margin-top:0 px;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+		background: whitesmoke;
+	}
+	
+		ul.addressList{
+		 	text-align: left;
+		}
+		p.placesText{
+			text-align: left;
+		}
+	
+		.well{
+			text-align: center;
+		}
+		.glyphicon { margin-right:10px; }
+		.panel-body { padding:0px; }
+		.panel-body table tr td { padding-left: 15px }
+		.panel-body .table {margin-bottom: 0px; }
+		
+		a:link {text-decoration: none}
+		a:visited {text-decoration: none}
+		a:active {text-decoration: none}
+		
+		h1{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";}
+		
+		#pages {
+			padding:8px 16px;
+			border:1px solid #ccc;
+			color:#408c99;
+			font-weight:bold;
+		}
+	  
+		body.linked .button, body.linked h1 {
+			opacity: .3;
+		}
+		
+		body.linked p {
+			color: rgba(22, 22, 22, 0.3);
+		}
+		
+		#mapDiv { 
+			width: 100%; 
+			height: 500px;
+		}
+		
+		#addressDiv { width: 785px; }
+		ul.addressList {list-style-type:circle;}
+
+	.button {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		overflow: hidden;
+		margin: 10px;
+		padding: 15px;
+		cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			-webkit-transition: all 60ms ease-in-out;
+		transition: all 60ms ease-in-out;
+		text-align: center;
+		white-space: nowrap;
+		text-decoration: none !important;
+		text-transform: none;
+		text-transform: capitalize;
+		color: #fff;
+		border: 0 none;
+		border-radius: 6px;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 1.3;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+		appearance: none;
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+		justify-content: center;
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+		align-items: center;
+			-webkit-box-flex: 0;
+			-ms-flex: 0 0 160px;
+        flex: 0 0 160px;
+	}
+	.button:hover {
+		-webkit-transition: all 60ms ease;
+		transition: all 60ms ease;
+		opacity: .85;
+	}
+	
+	.button:active {
+		-webkit-transition: all 60ms ease;
+		transition: all 60ms ease;
+		opacity: .75;
+	}
+	.button:focus {
+		outline: 1px dotted #959595;
+		outline-offset: -4px;
+	}
+
+	.button.-regular {
+		color: #202129;
+		background-color: #edeeee;
+	}
+	.button.-regular:hover {
+		color: #202129;
+		background-color: #e1e2e2;
+		opacity: 1;
+	}
+
+	.button.-regular:active {
+		background-color: #d5d6d6;
+		opacity: 1;
+	}
+
+	.button.-blue {
+		color: #FFFFFF;
+		background: #2c3e50;
+		width: 50%;
+	}
+	
+	.topnav {
+		overflow: hidden;
+		background-color: #2c3e50;
+		font-family: Roboto;
+	}
+
+	.topnav a {
+		float: right;
+		display: block;
+		color: #f2f2f2;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		font-size: 17px;  
+	}
+
+	.topnav a:hover {
+		background-color: whitesmoke;
+		color: black;
+	}
+
+	.topnav a.active {
+		background-color: #ecf0f1;
+		color: #2c3e50;
+	}
+	
+	.buttonMap {
+		background-color: #2980b9; /* Green */
+		border: none;
+		color: white;
+		padding: 16px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		-webkit-transition-duration: 0.4s; /* Safari */
+		transition-duration: 0.4s;
+		cursor: pointer;
+	}
+	
+	.button2 {
+		background-color: white; 
+		color: 2980b9; 
+		border: 2px solid #2980b9;
+		padding: 10px 28px;
+		border-radius: 4px;
+	}
+
+	.button2:hover {
+		background-color: #2980b9;
+		color: white;
+	}
+	
+ </style>
+
+  <!-- Map creation is here -->
+        <script type="text/javascript">
+              //Defining map as a global variable to access from other functions
+              var map;
+			  
+			  //define global geocoder object
+			  var geocoder;
+			  
+			  //define global streetView object
+			  var streetView;
+			  
+              function initMap() {
+					//initialize info popup window
+					popup = new google.maps.InfoWindow();
+					
+					//initialize geocoder object
+					geocoder = new google.maps.Geocoder();
+					
+					//Enabling new cartography and themes
+                    google.maps.visualRefresh = true;
+                    //Setting starting options of map
+                    var mapOptions = {
+                          center: new google.maps.LatLng(-7.5717183, 110.7790199),
+                          zoom: 10,
+                          mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    //Getting map DOM element
+                    var mapElement = document.getElementById("mapDiv");
+                    //Creating a map with DOM element which is just obtained
+                    map = new google.maps.Map(mapElement, mapOptions);
+					
+					//initialize streetView object of type StreetViewPanorama
+					streetView = map.getStreetView();
+										
+				}
+			
+				//put a marker in the map for the addresses geocoded
+				function showAddressMarkerOnMapOrStreetView(result) {
+					var marker = new google.maps.Marker({
+						map:map,
+						position: result.geometry.location
+					});
+					
+					map.setCenter(result.geometry.location);
+					map.setZoom(16);
+				}
+				
+				//function for setting the streetView properties
+				function setStreetViewOptions(location)
+				{
+					//set the location of the streetView object
+					streetView.setPosition(location);
+					//set the "Point Of View" of streetView object
+					streetView.setPov({
+						heading: 0,
+						pitch: 10
+					});
+				}
+				
+				//function for listing addresses on the addressList element and calling the geocoding stuff
+				function listAddresses()
+				{
+					//get text input handler
+					var addressField = document.getElementById('addressField');
+					//get addressList <ul> element handle
+					var addressList = document.getElementById('addressList');
+					if (addressList.children.length == 0)
+					{
+						var placesText = document.getElementById('placesText');
+						placesText.innerHTML = '<br/><b>Lokasi Yang Ditampilkan:</b>';
+					}
+					//create a list item
+					var listItem = document.createElement('li');
+					//get the text in the input element and make it a list item
+					listItem.innerHTML = addressField.value;
+					listItem.addEventListener('click', function(){
+						pinAddressOnMapOrStreetView(listItem.innerHTML);
+					});
+					//append it to the <ul> element
+					addressList.appendChild(listItem);
+					
+					//call the geocoding function
+					pinAddressOnMapOrStreetView(addressField.value);
+				}
+				
+				//function for geocoding the addresses
+				function pinAddressOnMapOrStreetView(addressText)
+				{	
+					//send the geocoding request
+					geocoder.geocode({ 'address': addressText}, function(results, status) {
+      					//if the service is working properly...
+      					if (status == google.maps.GeocoderStatus.OK) {
+        					//show the first result on map, either on 
+        					showAddressMarkerOnMapOrStreetView(results[0]);
+							if (streetView.getVisible())
+							{
+								//set the streetView properties, its location and "Point Of View"
+								setStreetViewOptions(results[0].geometry.location);
+							}
+      					} else {
+        					alert('Cannot geocode because: ' + status);
+      					}
+    				});
+				}
+				
+				//function for displaying the familiar map view
+				function showMap()
+				{
+					var pinAddressBtn = document.getElementById('pinAddress');
+					pinAddressBtn.value = 'Tandai Pada Peta';
+					streetView.setVisible(false);
+				}
+				
+				//function for displaying the streetView
+				function showStreetView()
+				{
+					var pinAddressBtn = document.getElementById('pinAddress');
+					pinAddressBtn.value = 'Tandai Pada Street View';
+					
+					setStreetViewOptions(map.getCenter());
+					streetView.setVisible(true);
+				}	
+        </script>
+
+ </head>
+
+<body onload="initMap()">
+	<div class="topnav">
+		<a href="#" target="_blank">Contact Person</a>
+		<a href="https://github.com/L200140073" target="_blank">Profil Github</a>
+		<a href="index.html">Tugas SIG</a>
+	</div>
+	
+	<div class="row">
+		<div class="container">
+    	<div class="col-md-14">
+		<br>
+		<a href='index.html'>
+		<p style="text-align:center"><img src="logo2.png" height="35%" width="35%"><br>
+		</a>
+		
+		</div>
+		</div><br>
+		</div>
+	</div>
+	
+	
+	<div class="row">
+		<div class="container">
+			 
+			
+     		<div class="panel-body page-contents">
+    		<div id="tugas2" class="content-p collapse in">
+    		<div class="well">
+			<center><h2><label>Street View</label></h2></center><br>
+			<a href="index.html" class="button2" role="button">Alamat</a>
+			<a href="tugas5_koordinat.html" class="button2" role="button">Koordinat</a>
+			<a href="tugas5_elevasi.html" class="button2" role="button">Ketinggian</a>
+			<a href="tugas5_jarak.html" class="button2" role="button">Jarak</a>
+			<a href="tugas5_rute.html" class="button2" role="button">Rute</a>
+			<a href="tugas5_street_view.html" class="button2" role="button">Street View</a><br><br>
+			
+			<div>
+				<div id="mapDiv"/>
+			</div>
+			
+			</div>
+			
+			</div>
+			<div id="addressDiv">
+					<h4><b>Mencari Lokasi dan Street View</b></h4>
+					<input size="14px" class="form-group form-control" id="addressField" type="text" size="30"  placeholder="Masukkan Alamat...." />
+					<input id="pinAddress" class="btn btn-success" type="button" value="Tandai Pada Peta" onclick="listAddresses()"  />
+					<input class="btn btn-success" type="button" value="Lihat Peta" onclick="showMap()"  />
+					<input id="pinAddressOnMapBtn" class="btn btn-success" type="button" value="Lihat Street View" onclick="showStreetView()"  />
+					<p id="placesText" class="placesText"></p>
+					<ul id="addressList" class="addressList">
+					</ul>
+			</div>
+			</div>
+	</div>		
+</body>
+</html>
